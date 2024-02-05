@@ -63,5 +63,5 @@ jobs:
           echo "NDK_PATH=${{ github.workspace }}/android-ndk-${{ github.event.inputs.ndkVersion }}" >> $GITHUB_ENV
       - name: Configure and Build
         run: |
-          ./android-configure $NDK_PATH $API_LEVEL $ARCH
-          make-ci -j4
+          ./android-configure $NDK_PATH $API_LEVEL $ARCH && make -j4
+  
