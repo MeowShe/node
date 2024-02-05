@@ -57,12 +57,15 @@ jobs:
           wget https://dl.google.com/android/repository/android-ndk-${{ github.event.inputs.ndkVersion }}-linux.zip
           unzip android-ndk-${{ github.event.inputs.ndkVersion }}-linux.zip -d ${{ github.workspace }}
           echo "NDK_PATH=${{ github.workspace }}/android-ndk-${{ github.event.inputs.ndkVersion }}" >> $GITHUB_ENV
+      - name: Configure and Build
+        run: |
+          ./android-configure $NDK_PATH $API_LEVEL $ARCH
       - name: Verify Compiler Executability
         run: |
           ls -l ${{ env.CC }}
           ls -l ${{ env.CXX }}
           file ${{ env.CC }}
           file ${{ env.CXX }}
-      - name: Configure and Build
+      - name: Build
         run: |
-          ./android-configure $NDK_PATH $API_LEVEL $ARCH && make -j4
+          make -j4
